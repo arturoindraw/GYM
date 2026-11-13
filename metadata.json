@@ -1,0 +1,8 @@
+{
+  "name": "FUEGO FIT Club Pereira | Rumba, Fuerza & Comunidad",
+  "description": "El club fitness líder en Pereira con clases de Rumba Neón, funcional, musculación, reserva de cupos en vivo y asesor inteligente de entrenamiento.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
