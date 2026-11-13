@@ -1,3 +1,8 @@
+import functionalImage from '../assets/images/discipline_functional_zone_1794087240813.jpg';
+import weightsImage from '../assets/images/discipline_musculacion_weights_1794087240805.jpg';
+import rumbaImage from '../assets/images/discipline_rumba_dance_1794087239794.jpg';
+import heroImage from '../assets/images/hero_gym_pereira_1794087239057.jpg';
+
 export interface GymClass {
   id: string;
   name: string;
@@ -36,13 +41,20 @@ export const GYM_CONFIG = {
   defaultWhatsAppMessage: 'Hola Fuego Fit, quiero agendar mi clase de cortesía gratis y conocer los horarios en Pereira.',
 };
 
+export const GYM_IMAGES = {
+  functional: functionalImage,
+  weights: weightsImage,
+  rumba: rumbaImage,
+  hero: heroImage,
+};
+
 export const DISCIPLINE_ZONES: DisciplineZone[] = [
   {
     id: 'rumba',
     title: 'Rumba Neón & Dance Fitness',
     subtitle: 'El corazón y ritmo de FUEGO FIT',
     description: 'Nuestra clase insignia en Pereira. Coreografías explosivas de salsa caleña, reggaetón, bachata y champeta en un estudio con acústica profesional e iluminación Neón reactiva.',
-    image: '/src/assets/images/discipline_rumba_dance_1794087239794.jpg',
+    image: GYM_IMAGES.rumba,
     calories: '550 - 750 kcal / sesión',
     targetAudience: 'Todos los niveles: quema de grasa, diversión, estrés cero y comunidad.',
     features: [
@@ -57,7 +69,7 @@ export const DISCIPLINE_ZONES: DisciplineZone[] = [
     title: 'Musculación & Sala de Fuerza',
     subtitle: 'Biomecánica y sobrecarga progresiva',
     description: 'Zona de pesas libres y máquinas de última generación diseñadas para hipertrofia y fuerza. Jaulas de potencia, mancuernas de hasta 50 kg y bancos de competición.',
-    image: '/src/assets/images/discipline_musculacion_weights_1794087240805.jpg',
+    image: GYM_IMAGES.weights,
     calories: '350 - 500 kcal / sesión',
     targetAudience: 'Ganancia de masa muscular, tonificación y salud postural.',
     features: [
@@ -72,7 +84,7 @@ export const DISCIPLINE_ZONES: DisciplineZone[] = [
     title: 'Entrenamiento Funcional & Turf',
     subtitle: 'Rendimiento atlético y circuitos HIIT',
     description: 'Pista de grama sintética (turf) para trineo, cuerdas de batalla, kettlebells rusas, cajones pliométricos y balones medicinales para elevar tu condición física integral.',
-    image: '/src/assets/images/discipline_functional_zone_1794087240813.jpg',
+    image: GYM_IMAGES.functional,
     calories: '500 - 700 kcal / sesión',
     targetAudience: 'Aceleración metabólica, agilidad, potencia y resistencia.',
     features: [
@@ -87,7 +99,7 @@ export const DISCIPLINE_ZONES: DisciplineZone[] = [
     title: 'Indoor Power Cycling',
     subtitle: 'Cardio inmersivo de alta potencia',
     description: 'Bicicletas magnéticas de precisión con volante de inercia silencioso. Ritmos envolventes, subidas virtuales de montaña y sprints de alta cadencia para tonificar piernas.',
-    image: '/src/assets/images/hero_gym_pereira_1794087239057.jpg',
+    image: GYM_IMAGES.hero,
     calories: '600 - 800 kcal / sesión',
     targetAudience: 'Capacidad pulmonar, quema calórica extrema y piernas de acero.',
     features: [
@@ -421,7 +433,7 @@ export const GOOGLE_REVIEWS = [
 export const INSTAGRAM_POSTS = [
   {
     id: 'ig-1',
-    image: '/src/assets/images/discipline_rumba_dance_1794087239794.jpg',
+    image: GYM_IMAGES.rumba,
     likes: '1.240',
     comments: '88',
     caption: '¡VIERNES DE RUMBA NEÓN EN PEREIRA! 🔥 Así se vivió el lleno total con nuestra familia Fuego Fit. ¡La salsa y el reggaetón se sudan con el corazón! Etiqueta a tu partner de baile 🕺💃 #FuegoFitPereira #RumbaFitness #PereiraFitness',
@@ -430,7 +442,7 @@ export const INSTAGRAM_POSTS = [
   },
   {
     id: 'ig-2',
-    image: '/src/assets/images/discipline_functional_zone_1794087240813.jpg',
+    image: GYM_IMAGES.functional,
     likes: '890',
     comments: '42',
     caption: 'La disciplina vence al talento cuando el talento no se esfuerza. Pista de turf activa con el WOD de resistencia atlética de hoy. ¿Ya entrenaste hoy? #CardioIntenso #EntrenamientoFuncional #GymPereira',
@@ -439,7 +451,7 @@ export const INSTAGRAM_POSTS = [
   },
   {
     id: 'ig-3',
-    image: '/src/assets/images/discipline_musculacion_weights_1794087240805.jpg',
+    image: GYM_IMAGES.weights,
     likes: '1.450',
     comments: '112',
     caption: 'Zona de hierro lista. Racks calibrados, ambiente oscuro con la mejor energía para romper tus marcas de sentadilla y press banca. ¡Acceso ilimitado desde las 5:00 AM! #FuerzaPura #Hypertrophy #NoExcuses',
@@ -448,7 +460,7 @@ export const INSTAGRAM_POSTS = [
   },
   {
     id: 'ig-4',
-    image: '/src/assets/images/hero_gym_pereira_1794087239057.jpg',
+    image: GYM_IMAGES.hero,
     likes: '2.100',
     comments: '165',
     caption: 'Tu segundo hogar en Pereira. Más de 1.200 m² diseñados con tecnología, ventilación de aire puro y la mejor comunidad fitness del Eje Cafetero. Escríbenos y agenda tu clase de cortesía gratis. #FuegoClub #PereiraRisaralda',

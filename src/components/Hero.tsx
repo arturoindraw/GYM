@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessageCircle, Calendar, Sparkles, MapPin, Star, ArrowRight } from 'lucide-react';
-import { GYM_CONFIG } from '../data/gymData';
+import { GYM_CONFIG, GYM_IMAGES } from '../data/gymData';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -102,7 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenCoach }) => {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900 group">
               <img
-                src="/src/assets/images/hero_gym_pereira_1794087239057.jpg"
+                src={GYM_IMAGES.hero}
                 alt="Instalaciones de alto rendimiento de FUEGO FIT Club Pereira con zona de máquinas y estudio de rumba"
                 className="w-full h-[400px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
