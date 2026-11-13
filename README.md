@@ -1,20 +1,26 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# FUEGO FIT Club Pereira
 
-# Run and deploy your AI Studio app
+Demo web del gimnasio FUEGO FIT, construido con React, Vite y TypeScript.
 
-This contains everything you need to run your app locally.
+## Sitio publicado
 
-View your app in AI Studio: https://ai.studio/apps/650e2501-e340-46cc-b85f-f63c78d541df
+https://arturoindraw.github.io/GYM/
 
-## Run Locally
+GitHub Pages publica automáticamente la rama `main` mediante GitHub Actions. Si es el primer despliegue, configura **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
-**Prerequisites:**  Node.js
+### Limitaciones del demo
 
+- Las reservas son una simulación: no se envían ni se guardan y no apartan un cupo. No ingreses datos personales reales.
+- El asesor no usa Gemini en GitHub Pages; las respuestas y rutinas son demostrativas.
+- El panel de Pixel y analítica solo muestra eventos de ejemplo en el navegador.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Desarrollo local
+
+**Requisitos:** Bun y Node.js.
+
+```bash
+bun install
+bun run dev
+```
+
+El servidor local usa `server.ts`; `GEMINI_API_KEY` es opcional y solo debe configurarse como variable privada para habilitar Gemini.

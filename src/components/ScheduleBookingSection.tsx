@@ -4,6 +4,8 @@ import confetti from 'canvas-confetti';
 import { SCHEDULE_CLASSES, GymClass, GYM_CONFIG } from '../data/gymData';
 import { validateBookingInput } from '../utils/fitnessLogic';
 
+const isDemoMode = import.meta.env.VITE_DEMO_MODE === 'true';
+
 interface ScheduleBookingSectionProps {
   initialDisciplineFilter?: string;
   onTrackEvent?: (eventName: string, params: Record<string, unknown>) => void;
@@ -32,6 +34,7 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
     time: string;
     instructor: string;
     userName: string;
+    isDemo: boolean;
   } | null>(null);
 
   const days: Array<'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes' | 'Sábado'> = [
@@ -77,6 +80,19 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
     setValidationError(null);
 
     try {
+      if (isDemoMode) {
+        setBookingConfirmed({
+          code: 'DEMO',
+          className: selectedClassToBook.name,
+          day: selectedClassToBook.day,
+          time: selectedClassToBook.time,
+          instructor: selectedClassToBook.instructor,
+          userName: userName.trim(),
+          isDemo: true,
+        });
+        return;
+      }
+
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -108,6 +124,7 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
           time: selectedClassToBook.time,
           instructor: selectedClassToBook.instructor,
           userName: userName.trim(),
+          isDemo: false,
         });
 
         // Trigger celebratory confetti
@@ -133,22 +150,8 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
       } else {
         setValidationError(data.error || 'No fue posible completar la reserva.');
       }
-    } catch (err) {
-      // Local fallback in case network hiccup
-      const randomCode = `FUEGO-${Math.floor(1000 + Math.random() * 9000)}`;
-      setBookingConfirmed({
-        code: randomCode,
-        className: selectedClassToBook.name,
-        day: selectedClassToBook.day,
-        time: selectedClassToBook.time,
-        instructor: selectedClassToBook.instructor,
-        userName: userName.trim(),
-      });
-      setClassesList((prev) =>
-        prev.map((c) =>
-          c.id === selectedClassToBook.id ? { ...c, takenSpots: c.takenSpots + 1 } : c
-        )
-      );
+    } catch {
+      setValidationError('No fue posible contactar el sistema; no se reservó ningún cupo.');
     } finally {
       setIsSubmitting(false);
     }
@@ -345,6 +348,12 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                   </span>
                 </div>
 
+                {isDemoMode && (
+                  <p className="mb-4 rounded-lg border border-amber-400/40 bg-amber-400/10 p-3 text-xs text-amber-200">
+                    Demo: no ingreses datos reales. La información no se envía ni se guarda y la reserva no es real.
+                  </p>
+                )}
+
                 {validationError && (
                   <div className="mb-4 p-3 bg-red-950/60 border border-red-800/80 rounded-lg flex items-center gap-2 text-xs text-red-200">
                     <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
@@ -380,7 +389,9 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                       className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400"
                     />
                     <span className="text-[11px] text-neutral-500 mt-1 block">
-                      Te enviaremos el ticket de confirmación y el recordatorio a tu WhatsApp.
+                      {isDemoMode
+                        ? 'En el demo no se enviará ningún mensaje.'
+                        : 'Te enviaremos el ticket de confirmación y el recordatorio a tu WhatsApp.'}
                     </span>
                   </div>
 
@@ -420,11 +431,11 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                       className="w-full py-4 text-xs font-bold uppercase tracking-wider text-black bg-amber-400 hover:bg-amber-300 active:bg-amber-500 rounded-xl transition-all shadow-[0_0_20px_rgba(251,191,36,0.3)] flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? (
-                        <span>Apartando cupo...</span>
+                        <span>{isDemoMode ? 'Preparando demostración...' : 'Apartando cupo...'}</span>
                       ) : (
                         <>
                           <Check className="w-4 h-4 stroke-[3]" />
-                          <span>Confirmar Mi Cupo de Cortesía Gratis</span>
+                          <span>{isDemoMode ? 'Simular Reserva de Demo' : 'Confirmar Mi Cupo de Cortesía Gratis'}</span>
                         </>
                       )}
                     </button>
@@ -442,13 +453,15 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                 </div>
 
                 <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">
-                  ¡RESERVA CONFIRMADA CON ÉXITO!
+                  {bookingConfirmed.isDemo ? 'DEMO · RESERVA NO REAL' : '¡RESERVA CONFIRMADA CON ÉXITO!'}
                 </span>
                 <h3 className="text-2xl font-black font-['Oswald'] uppercase text-white mb-2">
                   ¡Te esperamos en FUEGO FIT Pereira!
                 </h3>
                 <p className="text-xs text-neutral-300 mb-6">
-                  Hola <strong>{bookingConfirmed.userName}</strong>, tu cupo ha sido reservado en nuestro sistema.
+                  {bookingConfirmed.isDemo
+                    ? 'Esta simulación no fue enviada ni guardada; no tienes un cupo reservado.'
+                    : <>Hola <strong>{bookingConfirmed.userName}</strong>, tu cupo ha sido reservado en nuestro sistema.</>}
                 </p>
 
                 {/* Digital Ticket */}
@@ -456,7 +469,7 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                   <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-3">
                     <span className="text-xs font-bold text-white font-['Oswald'] uppercase">FUEGO PASS · PEREIRA</span>
                     <span className="text-xs font-mono font-bold text-amber-400 px-2 py-0.5 bg-neutral-950 rounded border border-neutral-800">
-                      {bookingConfirmed.code}
+                      {bookingConfirmed.isDemo ? 'DEMO' : bookingConfirmed.code}
                     </span>
                   </div>
                   <div className="space-y-1.5 text-xs text-neutral-300">
@@ -483,14 +496,16 @@ export const ScheduleBookingSection: React.FC<ScheduleBookingSectionProps> = ({
                 <div className="space-y-3">
                   <a
                     href={`https://wa.me/${GYM_CONFIG.whatsappNumber}?text=${encodeURIComponent(
-                      `¡Hola Fuego Fit! Acabo de reservar mi clase gratis de ${bookingConfirmed.className} para el ${bookingConfirmed.day} a las ${bookingConfirmed.time}. Mi código de reserva es ${bookingConfirmed.code}. ¡Nos vemos!`
+                      bookingConfirmed.isDemo
+                        ? `Hola Fuego Fit, estoy viendo la demostración y quisiera consultar disponibilidad para ${bookingConfirmed.className} el ${bookingConfirmed.day} a las ${bookingConfirmed.time}.`
+                        : `¡Hola Fuego Fit! Acabo de reservar mi clase gratis de ${bookingConfirmed.className} para el ${bookingConfirmed.day} a las ${bookingConfirmed.time}. Mi código de reserva es ${bookingConfirmed.code}. ¡Nos vemos!`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-amber-400 hover:bg-amber-300 flex items-center justify-center gap-2 transition-colors"
                   >
                     <MessageCircle className="w-4 h-4 fill-current" />
-                    <span>Enviar Ticket a WhatsApp de Recepción</span>
+                    <span>{bookingConfirmed.isDemo ? 'Consultar disponibilidad por WhatsApp' : 'Enviar Ticket a WhatsApp de Recepción'}</span>
                   </a>
 
                   <button

@@ -35,8 +35,8 @@ export const PixelTrackerPanel: React.FC<PixelTrackerPanelProps> = ({ events }) 
           className="flex items-center gap-2 px-3 py-2 bg-neutral-950/90 hover:bg-neutral-900 border border-neutral-800 hover:border-amber-400/50 rounded-full text-[11px] text-neutral-300 shadow-xl backdrop-blur-md transition-all"
           title="Ver estado de Pixel de Meta e Instagram Ads"
         >
-          <div className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span className="font-semibold text-white">Pixel & GA4 Activo</span>
+          <div className="w-2 h-2 rounded-full bg-amber-400" />
+          <span className="font-semibold text-white">Pixel & GA4 Demo</span>
           <span className="text-amber-400 font-mono">({events.length})</span>
           <ChevronUp className="w-3.5 h-3.5 text-neutral-500" />
         </button>
@@ -50,7 +50,7 @@ export const PixelTrackerPanel: React.FC<PixelTrackerPanelProps> = ({ events }) 
                 <strong className="text-white block font-['Oswald'] uppercase text-sm">
                   RETARGETING & PIXEL SUITE
                 </strong>
-                <span className="text-[10px] text-neutral-400">Meta Pixel (Instagram Ads) + GA4</span>
+                <span className="text-[10px] text-neutral-400">Monitor visual · Meta Pixel + GA4</span>
               </div>
             </div>
             <button
@@ -64,7 +64,7 @@ export const PixelTrackerPanel: React.FC<PixelTrackerPanelProps> = ({ events }) 
           </div>
 
           <p className="text-[11px] text-neutral-300 mb-3 leading-relaxed">
-            Rastrea visitantes para audiencias personalizadas de retargeting en Instagram y Google Ads para el gym en Pereira.
+            Panel ilustrativo: los eventos se muestran solo en esta página y no se envían a Meta ni a Google.
           </p>
 
           {/* Config fields */}
@@ -91,7 +91,7 @@ export const PixelTrackerPanel: React.FC<PixelTrackerPanelProps> = ({ events }) 
               type="submit"
               className="w-full py-1 text-[10px] font-bold uppercase tracking-wider bg-neutral-800 hover:bg-neutral-700 text-neutral-200 rounded transition-colors"
             >
-              {savedNotice ? '✓ IDs Actualizados' : 'Guardar IDs de Campaña'}
+              {savedNotice ? '✓ IDs de demo actualizados' : 'Actualizar solo esta demo'}
             </button>
           </form>
 
@@ -99,9 +99,9 @@ export const PixelTrackerPanel: React.FC<PixelTrackerPanelProps> = ({ events }) 
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
-                Eventos Disparados en Tiempo Real:
+                Eventos de demostración:
               </span>
-              <span className="text-[10px] text-emerald-400 font-mono">fbq & gtag ready</span>
+              <span className="text-[10px] text-amber-400 font-mono">Sin envío externo</span>
             </div>
 
             <div className="max-h-36 overflow-y-auto space-y-1.5 scrollbar-none pr-1">

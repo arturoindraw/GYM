@@ -16,6 +16,8 @@ import { AiFitnessCoachModal } from './components/AiFitnessCoachModal';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { PixelTrackerPanel, TrackingEventItem } from './components/PixelTrackerPanel';
 
+const isDemoMode = import.meta.env.VITE_DEMO_MODE === 'true';
+
 export default function App() {
   const [coachModalOpen, setCoachModalOpen] = useState(false);
   const [disciplineFilter, setDisciplineFilter] = useState('all');
@@ -48,17 +50,18 @@ export default function App() {
 
     setTrackingEvents((prev) => [newEvent, ...prev]);
 
-    // Send to backend analytics endpoint
-    fetch('/api/analytics/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventName,
-        params,
-      }),
-    }).catch(() => {
-      // ignore
-    });
+    if (!isDemoMode) {
+      fetch('/api/analytics/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName,
+          params,
+        }),
+      }).catch(() => {
+        // ignore
+      });
+    }
   };
 
   const handleOpenBooking = (_className?: string) => {

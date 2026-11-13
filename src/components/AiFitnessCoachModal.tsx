@@ -62,6 +62,17 @@ export const AiFitnessCoachModal: React.FC<AiFitnessCoachModalProps> = ({
     setLoading(true);
 
     try {
+      if (import.meta.env.VITE_DEMO_MODE === 'true') {
+        const demoMsg: Message = {
+          id: `c-${Date.now()}`,
+          sender: 'coach',
+          text: 'Asesor de demostración: esta respuesta no usa IA y tu mensaje no se envió a ningún servidor. Puedes probar “Generar plan instantáneo” para ver una rutina de ejemplo.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setMessages((prev) => [...prev, demoMsg]);
+        return;
+      }
+
       const res = await fetch('/api/gemini/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
